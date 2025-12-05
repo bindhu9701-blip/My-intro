@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Intro</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        padding: 40px 0;
+      }
+
+      h1 {
+        font-size: 3em;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1.3em;
+        opacity: 0.9;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .profile-card,
+      .weather-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .profile-section h2 {
+        color: #667eea;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 10px;
+      }
+
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .profile-item {
+        background: #f8f9ff;
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+      }
+
+      .profile-item strong {
+        color: #667eea;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .goals {
+        grid-column: span 2;
+      }
+
+      .goals ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .goals li {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 20px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+
+      /* Weather App Styles */
+      .weather-section {
+        background: linear-gradient(135deg, #00feba, #5b548a);
+        color: white;
+        border-radius: 20px;
+      }
+
+      .search {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .search input {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        margin-right: 12px;
+      }
+
+      .search button {
+        width: 55px;
+        height: 55px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .search button:hover {
+        transform: scale(1.05);
+      }
+
+      .error {
+        color: #ff6b6b;
+        font-size: 14px;
+        margin: 10px 0;
+        display: none;
+      }
+
+      .weather-display {
+        text-align: center;
+        display: none;
+      }
+
+      .weather-icon {
+        width: 120px;
+        margin: 20px 0;
+      }
+
+      .temp {
+        font-size: 4em;
+        font-weight: 300;
+        margin: 0;
+      }
+
+      .city-name {
+        font-size: 2em;
+        margin: 10px 0 20px;
+        opacity: 0.9;
+      }
+
+      .weather-details {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+      }
+
+      .weather-detail {
+        text-align: center;
+      }
+
+      .weather-detail img {
+        width: 40px;
+        margin-bottom: 5px;
+      }
+
+      #weather-map {
+        height: 250px;
+        border-radius: 15px;
+        margin-top: 20px;
+      }
+
+      footer {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 30px;
+        margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>✨ Bindhu</h1>
+        <p class="subtitle">BTech CSE | IIT Madras | 1st Year</p>
+      </header>
+
+      <div class="main-content">
+        <!-- Profile Section -->
+        <div class="profile-card">
+          <div class="profile-section">
+            <h2>👋 About Me</h2>
+            <div class="profile-grid">
+              <div class="profile-item">
+                <strong>🎓 Education</strong>
+                BTech CSE, IIT Madras (2025-2029)
+              </div>
+              <div class="profile-item">
+                <strong>🏠 From</strong>
+                Andhra Pradesh
+              </div>
+              <div class="profile-item">
+                <strong>📚 Learning Stage</strong>
+                Beginner - Excited to Learn!
+              </div>
+              <div class="profile-item">
+                <strong>🎨 Hobbies</strong>
+                Sketching, Music, Horror Movies
+              </div>
+              <div class="profile-item goals">
+                <strong>🎯 My Goals</strong>
+                <ul>
+                  <li>Master Programming Fundamentals</li>
+                  <li>Build Amazing Web Projects</li>
+                  <li>Improve Problem-Solving Skills</li>
+                  <li>Diving into the tech universe</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weather App Section -->
+        <div class="profile-card weather-section">
+          <h2 style="margin-bottom: 20px; color: white">🌤️ Current Weather</h2>
+
+          <div class="search">
+            <input
+              type="text"
+              placeholder="Enter your city (e.g. Kadapa)"
+              id="weatherInput"
+            />
+            <button id="searchBtn">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/482/482631.png"
+                alt="Search"
+                style="width: 20px"
+              />
+            </button>
+          </div>
+
+          <div class="error" id="errorMsg">❌ Invalid city name</div>
+
+          <div class="weather-display" id="weatherDisplay">
+            <img src="" alt="Weather" class="weather-icon" id="weatherIcon" />
+            <h1 class="temp" id="temp"></h1>
+            <h2 class="city-name" id="cityName"></h2>
+
+            <div class="weather-details">
+              <div class="weather-detail">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/728/728093.png"
+                  alt="Humidity"
+                />
+                <div id="humidity"></div>
+                <p>Humidity</p>
+              </div>
+              <div class="weather-detail">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2573/2573199.png"
+                  alt="Wind"
+                />
+                <div id="wind"></div>
+                <p>Wind Speed</p>
+              </div>
+            </div>
+
+            <div id="weather-map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>✨ Built with care❤️ | IIT Madras CSE '29</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      // Weather API setup
+      const apiKey = "087b4ed8be7aab6efff24eaec6330ec6";
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+      // Elements
+      const searchInput = document.getElementById("weatherInput");
+      const searchBtn = document.getElementById("searchBtn");
+      const errorMsg = document.getElementById("errorMsg");
+      const weatherDisplay = document.getElementById("weatherDisplay");
+      const weatherIcon = document.getElementById("weatherIcon");
+      const tempEl = document.getElementById("temp");
+      const cityName = document.getElementById("cityName");
+      const humidityEl = document.getElementById("humidity");
+      const windEl = document.getElementById("wind");
+
+      // Map setup - Default Chennai (IIT Madras)
+      const map = L.map("weather-map").setView([13.0827, 80.2707], 10);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+      let weatherMarker;
+
+      // Weather icons
+      const icons = {
+        Clouds: "https://cdn-icons-png.flaticon.com/512/414/414825.png",
+        Clear: "https://cdn-icons-png.flaticon.com/512/869/869869.png",
+        Rain: "https://cdn-icons-png.flaticon.com/512/1163/1163624.png",
+        Drizzle: "https://cdn-icons-png.flaticon.com/512/414/414974.png",
+        Mist: "https://cdn-icons-png.flaticon.com/512/1197/1197102.png",
+      };
+
+      async function checkWeather(city) {
+        try {
+          const response = await fetch(`${apiUrl}${city}&appid=${apiKey}`);
+          const data = await response.json();
+
+          if (data.cod !== 200) {
+            errorMsg.style.display = "block";
+            weatherDisplay.style.display = "none";
+            return;
+          }
+
+          errorMsg.style.display = "none";
+          weatherDisplay.style.display = "block";
+
+          // Update weather data
+          cityName.textContent = data.name;
+          tempEl.textContent = `${Math.round(data.main.temp)}°C`;
+          humidityEl.innerHTML = `${data.main.humidity}%`;
+          windEl.innerHTML = `${data.wind.speed} km/h`;
+
+          // Weather icon
+          const weatherType = data.weather[0].main;
+          weatherIcon.src = icons[weatherType] || icons.Clouds;
+
+          // Update map
+          map.setView([data.coord.lat, data.coord.lon], 12);
+          if (weatherMarker) {
+            weatherMarker
+              .setLatLng([data.coord.lat, data.coord.lon])
+              .setPopupContent(
+                `${data.name}<br>${Math.round(data.main.temp)}°C`
+              )
+              .openPopup();
+          } else {
+            weatherMarker = L.marker([data.coord.lat, data.coord.lon])
+              .addTo(map)
+              .bindPopup(`${data.name}<br>${Math.round(data.main.temp)}°C`)
+              .openPopup();
+          }
+        } catch (error) {
+          errorMsg.style.display = "block";
+          weatherDisplay.style.display = "none";
+        }
+      }
+
+      // Event listeners
+      searchBtn.onclick = () => checkWeather(searchInput.value.trim());
+      searchInput.onkeypress = (e) => {
+        if (e.key === "Enter" && searchInput.value.trim()) {
+          checkWeather(searchInput.value.trim());
+        }
+      };
+
+      // Load default weather for Chennai
+      checkWeather("Kadapa");
+    </script>
+  </body>
+</html>
