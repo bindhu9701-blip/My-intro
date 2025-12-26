@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Intro</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>✨ Bindhu</h1>
+        <p class="subtitle">BTech CSE | IIT Madras | 1st Year</p>
+      </header>
+
+      <div class="main-content">
+        <!-- Profile Section -->
+        <div class="profile-card">
+          <div class="profile-section">
+            <h2>👋 About Me</h2>
+            <div class="profile-grid">
+              <div class="profile-item">
+                <strong>🎓 Education</strong>
+                BTech CSE, IIT Madras (2025-2029)
+              </div>
+              <div class="profile-item">
+                <strong>🏠 From</strong>
+                Andhra Pradesh
+              </div>
+              <div class="profile-item">
+                <strong>📚 Learning Stage</strong>
+                Beginner - Excited to Learn!
+              </div>
+              <div class="profile-item">
+                <strong>🎨 Hobbies</strong>
+                Sketching, Music, Horror Movies
+              </div>
+              <div class="profile-item goals">
+                <strong>🎯 My Goals</strong>
+                <ul>
+                  <li>Master Programming Fundamentals</li>
+                  <li>Build Amazing Web Projects</li>
+                  <li>Improve Problem-Solving Skills</li>
+                  <li>Diving into the tech universe</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weather App Section -->
+        <div class="profile-card weather-section">
+          <h2 style="margin-bottom: 20px; color: white">🌤️ Current Weather</h2>
+
+          <div class="search">
+            <input
+              type="text"
+              placeholder="Enter your city (e.g. Kadapa)"
+              id="weatherInput"
+            />
+            <button id="searchBtn">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/482/482631.png"
+                alt="Search"
+                style="width: 20px"
+              />
+            </button>
+          </div>
+
+          <div class="error" id="errorMsg">❌ Invalid city name</div>
+
+          <div class="weather-display" id="weatherDisplay">
+            <img src="" alt="Weather" class="weather-icon" id="weatherIcon" />
+            <h1 class="temp" id="temp"></h1>
+            <h2 class="city-name" id="cityName"></h2>
+
+            <div class="weather-details">
+              <div class="weather-detail">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/728/728093.png"
+                  alt="Humidity"
+                />
+                <div id="humidity"></div>
+                <p>Humidity</p>
+              </div>
+              <div class="weather-detail">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2573/2573199.png"
+                  alt="Wind"
+                />
+                <div id="wind"></div>
+                <p>Wind Speed</p>
+              </div>
+            </div>
+
+            <div id="weather-map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>✨ Built with care❤️ | IIT Madras CSE '29</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="intro.js"></script>
+  </body>
+</html>
